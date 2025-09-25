@@ -1,7 +1,13 @@
 'use strict';
 
 function waitFor(element, eventName) {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
+    if (!element) {
+      reject(new Error(`waitFor: element is null for event '${eventName}'`));
+
+      return;
+    }
+
     function handler() {
       element.removeEventListener(eventName, handler);
 
@@ -13,25 +19,33 @@ function waitFor(element, eventName) {
   });
 }
 
-const printMessage = (message) => {
+function printMessage(message) {
   const msgDiv = document.createElement('div');
 
   msgDiv.className = 'message';
   msgDiv.textContent = message;
   document.body.appendChild(msgDiv);
-};
+}
 
-const loginField = document.getElementById('login');
-const passwordField = document.getElementById('password');
-const button = document.getElementById('submit');
+window.addEventListener('DOMContentLoaded', () => {
+  const loginField = document.getElementById('login');
+  const passwordField = document.getElementById('password');
+  const button = document.getElementById('submit');
 
-waitFor(loginField, 'click').then(printMessage);
-waitFor(passwordField, 'click').then(printMessage);
-waitFor(button, 'click').then(printMessage);
+  waitFor(loginField, 'click').then(printMessage);
+  waitFor(passwordField, 'click').then(printMessage);
+  waitFor(button, 'click').then(printMessage);
 
-waitFor(loginField, 'input').then(printMessage);
-waitFor(passwordField, 'input').then(printMessage);
+  waitFor(loginField, 'input').then(printMessage);
+  waitFor(passwordField, 'input').then(printMessage);
 
-waitFor(loginField, 'blur').then(printMessage);
-waitFor(passwordField, 'blur').then(printMessage);
-waitFor(button, 'blur').then(printMessage);
+  waitFor(loginField, 'blur').then(printMessage);
+  waitFor(passwordField, 'blur').then(printMessage);
+  waitFor(button, 'blur').then(printMessage);
+});
+
+if (typeof window !== 'undefined') {
+  window.waitFor = waitFor;
+  window.printMessage = printMessage;
+}
+export { waitFor, printMessage };
