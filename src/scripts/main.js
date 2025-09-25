@@ -1,13 +1,7 @@
 'use strict';
 
 function waitFor(element, eventName) {
-  return new Promise((resolve, reject) => {
-    if (!element) {
-      reject(new Error(`waitFor: element is null for event '${eventName}'`));
-
-      return;
-    }
-
+  return new Promise((resolve) => {
     function handler() {
       element.removeEventListener(eventName, handler);
 
@@ -19,13 +13,13 @@ function waitFor(element, eventName) {
   });
 }
 
-function printMessage(message) {
+const printMessage = (message) => {
   const msgDiv = document.createElement('div');
 
   msgDiv.className = 'message';
   msgDiv.textContent = message;
   document.body.appendChild(msgDiv);
-}
+};
 
 const loginField = document.getElementById('login');
 const passwordField = document.getElementById('password');
@@ -42,4 +36,5 @@ waitFor(loginField, 'blur').then(printMessage);
 waitFor(passwordField, 'blur').then(printMessage);
 waitFor(button, 'blur').then(printMessage);
 
-export { waitFor, printMessage };
+window.waitFor = waitFor;
+window.printMessage = printMessage;
