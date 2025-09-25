@@ -1,6 +1,13 @@
 'use strict';
 
 function waitFor(element, eventName) {
+  if (!element || typeof element.addEventListener !== 'function') {
+    throw new TypeError(
+      'Invalid element provided to waitFor: expected an EventTarget with ' +
+        'addEventListener',
+    );
+  }
+
   return new Promise((resolve) => {
     function handler() {
       element.removeEventListener(eventName, handler);
