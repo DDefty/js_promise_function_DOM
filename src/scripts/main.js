@@ -27,25 +27,19 @@ function printMessage(message) {
   document.body.appendChild(msgDiv);
 }
 
-window.addEventListener('DOMContentLoaded', () => {
-  const loginField = document.getElementById('login');
-  const passwordField = document.getElementById('password');
-  const button = document.getElementById('submit');
+const loginField = document.getElementById('login');
+const passwordField = document.getElementById('password');
+const button = document.getElementById('submit');
 
-  waitFor(loginField, 'click').then(printMessage);
-  waitFor(passwordField, 'click').then(printMessage);
-  waitFor(button, 'click').then(printMessage);
+waitFor(loginField, 'click').then(printMessage);
+waitFor(passwordField, 'click').then(printMessage);
+waitFor(button, 'click').then(printMessage);
 
-  waitFor(loginField, 'input').then(printMessage);
-  waitFor(passwordField, 'input').then(printMessage);
+waitFor(loginField, 'input').then(printMessage);
+waitFor(passwordField, 'input').then(printMessage);
 
-  waitFor(loginField, 'blur').then(printMessage);
-  waitFor(passwordField, 'blur').then(printMessage);
-  waitFor(button, 'blur').then(printMessage);
-});
+waitFor(loginField, 'blur').then(printMessage);
+waitFor(passwordField, 'blur').then(printMessage);
+waitFor(button, 'blur').then(printMessage);
 
-if (typeof window !== 'undefined') {
-  window.waitFor = waitFor;
-  window.printMessage = printMessage;
-}
 export { waitFor, printMessage };
